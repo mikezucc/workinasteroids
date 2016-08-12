@@ -2,6 +2,9 @@ import pygame, math, decimal, random, sys, pickle
 from decimal import*
 from pygame.locals import *
 import os
+
+counter = 0
+
 class DataHandler(object):
     def defaultscore(self):
         self.hiscorename=['Cathy','Kellye','Dwight','Candis','Dorothy','Kym','Farah','Huey','Vonnie','Loyd']
@@ -125,10 +128,19 @@ class Asteroid(Objects,pygame.sprite.Sprite):
                 print self.x, self.y
                 print gameinit.player.x, gameinit.player.y
                 gameinit.player.explode(time)
+            else: 
+                renderedSurface = pygame.display.get_surface()
+                global counter
+                if counter % 5 == 0:
+                    pygame.image.save(renderedSurface, 'frame_' + str(counter) + '.png')
+                    
+                    print "FRAME WRITE " + str(time)
+                counter = counter + 1
         self.x+=0.5*time*self.speedx/(self.size+1)
         self.y+=0.5*time*self.speedy/(self.size+1)
         self.rect.center=(self.x,self.y)
         self.screencollision(time)
+        
         
             
 class Bullet(Objects, pygame.sprite.Sprite):
